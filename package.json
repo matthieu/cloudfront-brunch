@@ -1,6 +1,6 @@
 {
   "name": "cloudfront-brunch",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Adds CloudFront support to brunch.",
   "author": "Matthieu Riou",
   "homepage": "https://github.com/matthieu/cloudfront-brunch",

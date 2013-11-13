@@ -26,7 +26,7 @@ module.exports = class CloudFrontBrunch
   # TODO gzip
   onCompile: ->
     version = Math.floor(Date.now()/1000)
-    root    = if @options.local then '/' else (@options.cdnUrl+'/'+version)
+    root    = if @options.local then '' else (@options.cdnUrl+'/'+version)
 
     readDir @config.paths.public, (err, dir) =>
       async.each dir.files, (f, cb) =>
@@ -43,12 +43,11 @@ module.exports = class CloudFrontBrunch
 
 replaceInFile = (f, token, replacement, cb) ->
   return cb() unless /\.(html|css)$/.test(f)
-  console.log "replacing in #{f}"
   fs.readFile f, (err, data) ->
     return cb(err) if err
     result = data.toString().replace(new RegExp(token, 'g'), replacement)
     fs.writeFile f, result, (err) ->
-      console.log err
+      console.log(err) if err
       cb(err)
 
 readDir = (start, cb) ->
