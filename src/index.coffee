@@ -7,13 +7,14 @@ module.exports = class CloudFrontBrunch
   brunchPlugin: yes
 
   constructor: (@config) ->
-    awsAccess = process.env['AWS_ACCESS_KEY_ID']
-    awsSecret = process.env['AWS_SECRET_ACCESS_KEY']
+    @options = @config.plugins.cloudfront || @config.cloudfront
+
+    awsAccess = process.env['AWS_ACCESS_KEY_ID'] || @options?.awsAccess
+    awsSecret = process.env['AWS_SECRET_ACCESS_KEY'] || @options?.awsSecret
     unless awsAccess && awsSecret
       console.log "Please setup AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY with your aws credentials."
       return
 
-    @options = @config.plugins.cloudfront || @config.cloudfront
     unless @options?.bucket?
       console.log "Please configure the s3 bucket to upload to."
       return
